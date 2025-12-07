@@ -1,2 +1,5 @@
-# final-project-csc-372
+# term project csc 372
 
+## MVP Demo Video
+
+https://uncg-my.sharepoint.com/:v:/g/personal/alquinn2_uncg_edu/IQCNR7h5M8jeQZTa9Sg63Q-VASW1c8QwL18-jZ7Z6jAx6KY?nav=eyJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJPbmVEcml2ZUZvckJ1c2luZXNzIiwicmVmZXJyYWxBcHBQbGF0Zm9ybSI6IldlYiIsInJlZmVycmFsTW9kZSI6InZpZXciLCJyZWZlcnJhbFZpZXciOiJNeUZpbGVzTGlua0NvcHkifX0&e=hpXwF5 
