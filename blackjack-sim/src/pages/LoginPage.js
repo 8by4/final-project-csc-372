@@ -1,5 +1,6 @@
-import './App.css';
-import NavBar from './components/navbarComponent';
+import React from 'react';
+import '../App.css';
+import NavBar from '../components/navbarComponent';
 
 function LogInPage() {
   return (
