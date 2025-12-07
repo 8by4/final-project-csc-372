@@ -1,10 +1,14 @@
+//App.js
 import './App.css';
 import NavBar from './components/navbarComponent';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 
 import card1 from './assets/6H.png';
 import card2 from './assets/8S.png';
+
 import LoginPage from './pages/LoginPage';
+import AccountPage from './pages/AccountPage';
+
 
 function HomePage() {
   return (
@@ -30,6 +34,7 @@ function App() {
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/login" element={<LoginPage />} />
+        <Route path="/account" element={<AccountPage />} />
       </Routes>
     </Router>
   );

@@ -1,3 +1,4 @@
+//accountController.js
 "use strict";
 
 const model = require("../models/accountModel");
@@ -51,9 +52,28 @@ async function createUser(req, res) {
     }
 }
 
+async function loginUser(req, res) {
+    try {
+        const { username, password } = req.body;
+        const user = await model.loginUser(username, password);
+
+        if (!user) {
+            return res.status(401).json({ message: 'Invalid username or password' });
+        }
+
+        res.json({ user });
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Server error');
+    }
+}
+
+
+
 
 module.exports = {
     fetchWins,
     fetchLosses,
     createUser,
+    loginUser
 };

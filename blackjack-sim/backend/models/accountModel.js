@@ -1,3 +1,4 @@
+//accountModel.js
 "use strict";
 const pool = require('../models/db');
 
@@ -27,8 +28,18 @@ async function createAccount(username, password, email) {
     return result.rows[0];
 }
 
+
+async function loginUser(username, password) {
+    const queryText = "SELECT * FROM blackjack_users WHERE username=$1 AND password=$2";
+    const values = [username, password];
+    const result = await pool.query(queryText, values);
+    return result.rows[0];
+}
+
+
 module.exports = {
     getAllWins,
     getAllLosses,
-    createAccount
+    createAccount,
+    loginUser
 }
