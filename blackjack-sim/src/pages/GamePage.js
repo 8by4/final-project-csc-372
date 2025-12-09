@@ -32,26 +32,29 @@ function GamePage() {
 
             console.log("Deck ID:", deck.deck_id);
 
+            let playerCards = [];
+            for (let i = 0; i < 2; i++) {  
+                const draw = await drawCards(deck.deck_id, 1);
+                playerCards.push(draw.cards[0]);
+            }
 
-            const playerResponse = await drawCards(deck.deck_id, 2);
-            const dealerResponse = await drawCards(deck.deck_id, 2);
-
-            const playerCards = playerResponse.cards || [];
-            const dealerCards = dealerResponse.cards || [];
-
-            const extraCard = await drawCards(deck.deck_id, 1);
-            playerCards = [...playerCards, extraCard.cards[0]];
+    
+            let dealerCards = [];
+            for (let i = 0; i < 2; i++) {
+                const draw = await drawCards(deck.deck_id, 1);
+                dealerCards.push(draw.cards[0]);
+            }
 
             setPlayerCards(playerCards);
             setDealerCards(dealerCards);
 
             console.log("Player draw response:", playerCards);
             console.log("Dealer draw response:", dealerCards);
+
         } catch (err) {
             console.error("Error initializing game:", err);
         }
     }
-
     useEffect(() => {
         initGame();
     }, []);
