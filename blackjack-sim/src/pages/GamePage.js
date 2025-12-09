@@ -1,4 +1,3 @@
-//GamePage.js
 import '../App.css';
 import '../css/Login.css';
 import NavBar from '../components/navbarComponent';
@@ -24,15 +23,16 @@ function GamePage() {
     async function initGame() {
         setGameOver(false);
         setMessage("");
+        setPlayerCards([]);
+        setDealerCards([]);
 
         const deck = await newDeck();
         setDeckId(deck.deck_id);
 
-        const player = await drawCards(deck.deck_id, 2);
-        const dealer = await drawCards(deck.deck_id, 2);
-
-        console.log(player.cards); 
-        console.log(dealer.cards);
+        const [player, dealer] = await Promise.all([
+            drawCards(deck.deck_id, 2),
+            drawCards(deck.deck_id, 2)
+        ]);
 
         setPlayerCards(player.cards);
         setDealerCards(dealer.cards);
@@ -114,20 +114,28 @@ function GamePage() {
                     <h2>Blackjack</h2>
 
                     <h3>Dealer</h3>
-                    {dealerCards.map((c, i) => (
-                        <img
-                            key={i}
-                            src={gameOver || i === 0 ? c.image : "https://deckofcardsapi.com/static/img/back.png"}
-                            alt="card"
-                            width={90}
-                        />
-                    ))}
+                    {dealerCards.length === 0 ? (
+                        <p>Loading dealer's hand...</p>
+                    ) : (
+                        dealerCards.map((c, i) => (
+                            <img
+                                key={i}
+                                src={gameOver || i === 0 ? c.image : "https://deckofcardsapi.com/static/img/back.png"}
+                                alt="card"
+                                width={90}
+                            />
+                        ))
+                    )}
 
                     <h3>Your Hand ({calculateHand(playerCards)})</h3>
-                    {playerCards.map((c) => (
-                        <img key={c.code} src={c.image} alt={c.code} width={90} />
-                    ))}
-                    
+                    {playerCards.length === 0 ? (
+                        <p>Loading your hand...</p>
+                    ) : (
+                        playerCards.map((c) => (
+                            <img key={c.code} src={c.image} alt={c.code} width={90} />
+                        ))
+                    )}
+
                     <div style={{ marginTop: "20px" }}>
                         {!gameOver ? (
                             <>
