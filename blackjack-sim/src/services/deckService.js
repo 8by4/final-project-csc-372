@@ -4,7 +4,7 @@ export async function newDeck() {
   return res.json();
 }
 
-export async function drawCards(deckId, count) {
+export async function drawCards(deckId, count = 1) {
   const res = await fetch(`https://final-project-csc-372.onrender.com/deck/${deckId}/draw?count=${count}`);
   return res.json();
 }
