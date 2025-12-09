@@ -109,10 +109,7 @@ function GamePage() {
             ) : (
                 <div style={{ textAlign: "center" }}>
                     <h2>Blackjack</h2>
-                    <h3>Your Hand ({calculateHand(playerCards)})</h3>
-                    {playerCards.map((c) => (
-                        <img key={c.code} src={c.image} alt={c.code} width={90} />
-                    ))}
+
                     <h3>Dealer</h3>
                     {dealerCards.map((c, i) => (
                         <img
@@ -122,6 +119,12 @@ function GamePage() {
                             width={90}
                         />
                     ))}
+
+                    <h3>Your Hand ({calculateHand(playerCards)})</h3>
+                    {playerCards.map((c) => (
+                        <img key={c.code} src={c.image} alt={c.code} width={90} />
+                    ))}
+                    
                     <div style={{ marginTop: "20px" }}>
                         {!gameOver ? (
                             <>
