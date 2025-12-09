@@ -17,8 +17,9 @@ async function draw(req, res){
     try{
         const { deckId } = req.params;
         const count = parseInt(req.query.count) || 1;
-
         const result = await model.drawCard(deckId, count);
+
+        console.log("Backend draw result:", result);
         res.json(result);
     }
     catch(err){
