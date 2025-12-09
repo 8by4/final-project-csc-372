@@ -29,15 +29,18 @@ function GamePage() {
         try {
             const deck = await newDeck();
             setDeckId(deck.deck_id);
-            
+
             console.log("Deck ID:", deck.deck_id);
 
 
             const playerResponse = await drawCards(deck.deck_id, 2);
             const dealerResponse = await drawCards(deck.deck_id, 2);
 
-            console.log("Player draw response:", playerResponse);
+            console.log("Player draw response:", playerResponse); 
             console.log("Dealer draw response:", dealerResponse);
+
+            setPlayerCards(playerResponse.cards || []);
+            setDealerCards(dealerResponse.cards || []);
 
             if (playerResponse.cards && playerResponse.cards.length === 2) {
                 setPlayerCards(playerResponse.cards);
