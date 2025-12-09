@@ -50,17 +50,17 @@ function GamePage() {
             setPlayerCards(playerResponse.cards || []);
             setDealerCards(dealerResponse.cards || []);
 
-            if (playerResponse.cards && playerResponse.cards.length === 2) {
-                setPlayerCards(playerResponse.cards);
-            } else {
-                console.error("Player did not get 2 cards:", playerResponse);
-            }
+            // if (playerResponse.cards && playerResponse.cards.length === 2) {
+            //     setPlayerCards(playerResponse.cards);
+            // } else {
+            //     console.error("Player did not get 2 cards:", playerResponse);
+            // }
 
-            if (dealerResponse.cards && dealerResponse.cards.length === 2) {
-                setDealerCards(dealerResponse.cards);
-            } else {
-                console.error("Dealer did not get 2 cards:", dealerResponse);
-            }
+            // if (dealerResponse.cards && dealerResponse.cards.length === 2) {
+            //     setDealerCards(dealerResponse.cards);
+            // } else {
+            //     console.error("Dealer did not get 2 cards:", dealerResponse);
+            // }
         } catch (err) {
             console.error("Error initializing game:", err);
         }
