@@ -2,6 +2,7 @@
 
 const express = require("express");
 const cors = require("cors");
+const PORT = process.env.PORT || 5000;
 
 const app = express();
 app.use(express.json());
@@ -13,4 +14,4 @@ const accountRoutes = require("./routes/accountRoutes");
 app.use("/deck", deckRoutes);
 app.use("/account", accountRoutes);
 
-app.listen(5000, () => console.log("Server running on port 5000"));
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
