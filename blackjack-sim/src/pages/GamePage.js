@@ -33,6 +33,7 @@ function GamePage() {
             drawCards(deck.deck_id, 2),
             drawCards(deck.deck_id, 2)
         ]);
+        console.log(player);
 
         setPlayerCards(player.cards);
         setDealerCards(dealer.cards);
