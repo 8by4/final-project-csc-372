@@ -19,7 +19,7 @@ async function drawCard(deckId, count){
         return res.json();
     }
     catch(err){
-        print("Failed to draw card!");
+        console.error("Failed to draw card!", err);
     }
 }
 
