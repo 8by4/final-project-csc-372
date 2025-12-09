@@ -14,8 +14,6 @@ async function createNewDeck() {
 }
 
 async function drawCard(deckId, count){
-    count = 1;
-
     try{
         const res = await fetch(`${BASE_URL}/${deckId}/draw/?count=${count}`);
         return res.json();
