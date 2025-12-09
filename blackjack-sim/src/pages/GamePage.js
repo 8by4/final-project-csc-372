@@ -38,7 +38,9 @@ function GamePage() {
 
             const playerCards = playerResponse.cards || [];
             const dealerCards = dealerResponse.cards || [];
-            
+
+            const extraCard = await drawCards(deck.deck_id, 1);
+            playerCards = [...playerCards, extraCard.cards[0]];
 
             setPlayerCards(playerCards);
             setDealerCards(dealerCards);
