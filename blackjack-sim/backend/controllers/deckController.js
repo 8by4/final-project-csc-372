@@ -16,12 +16,11 @@ async function newDeck(req, res) {
 async function draw(req, res){
     try{
         const { deckId } = req.params;
-        const count = parseInt(req.query.count, 10) || 1;  
-        console.log("Deck ID:", deckId, "Count:", count);   
+        const count = parseInt(req.query.count) || 1;
+        console.log("Drawing cards:", deckId, count);
 
         const result = await model.drawCard(deckId, count);
-        console.log("Draw result:", result);          
-
+        console.log("Draw result:", result);
         res.json(result);
     }
     catch(err){

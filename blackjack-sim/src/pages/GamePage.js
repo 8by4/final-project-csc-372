@@ -33,13 +33,11 @@ function GamePage() {
             console.log("Deck ID:", deck.deck_id);
 
 
-            const playerResponse = await drawCards(deck.deck_id, 1);
-            const secondPlayer = await drawCards(deck.deck_id, 1);
-            const playerCards = [...playerResponse.cards, ...secondPlayer.cards];
+            const playerResponse = await drawCards(deck.deck_id, 2);
+            const dealerResponse = await drawCards(deck.deck_id, 2);
 
-            const dealerResponse = await drawCards(deck.deck_id, 1);
-            const secondDealer = await drawCards(deck.deck_id, 1);
-            const dealerCards = [...dealerResponse.cards, ...secondDealer.cards];
+            const playerCards = playerResponse.cards || [];
+            const dealerCards = dealerResponse.cards || [];
 
             setPlayerCards(playerCards);
             setDealerCards(dealerCards);
