@@ -31,6 +31,9 @@ function GamePage() {
         const player = await drawCards(deck.deck_id, 2);
         const dealer = await drawCards(deck.deck_id, 2);
 
+        console.log(player.cards); 
+        console.log(dealer.cards);
+
         setPlayerCards(player.cards);
         setDealerCards(dealer.cards);
     }
