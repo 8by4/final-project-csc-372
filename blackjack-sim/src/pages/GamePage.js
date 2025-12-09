@@ -44,23 +44,8 @@ function GamePage() {
             setPlayerCards(playerCards);
             setDealerCards(dealerCards);
 
-            console.log("Player draw response:", playerResponse);
-            console.log("Dealer draw response:", dealerResponse);
-
-            setPlayerCards(playerResponse.cards || []);
-            setDealerCards(dealerResponse.cards || []);
-
-            // if (playerResponse.cards && playerResponse.cards.length === 2) {
-            //     setPlayerCards(playerResponse.cards);
-            // } else {
-            //     console.error("Player did not get 2 cards:", playerResponse);
-            // }
-
-            // if (dealerResponse.cards && dealerResponse.cards.length === 2) {
-            //     setDealerCards(dealerResponse.cards);
-            // } else {
-            //     console.error("Dealer did not get 2 cards:", dealerResponse);
-            // }
+            console.log("Player draw response:", playerCards);
+            console.log("Dealer draw response:", dealerCards);
         } catch (err) {
             console.error("Error initializing game:", err);
         }
