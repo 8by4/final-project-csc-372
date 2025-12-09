@@ -1,30 +1,38 @@
+//AccountPage.js
+
 import React, { useEffect, useState } from 'react';
 import '../App.css';
 import '../css/Login.css';
 import NavBar from '../components/navbarComponent';
+import { getUserById } from '../services/accountService';
 
 function AccountPage() {
     const [user, setUser] = useState(null);
-    const [loading, setLoading] = useState(true);
+
+    const fetchLatestUser = async () => {
+        const storedUser = localStorage.getItem("user");
+        if (!storedUser) return;
+        const parsedUser = JSON.parse(storedUser);
+        console.log("Stored user:", parsedUser);
+        try {
+            const latestUser = await getUserById(parsedUser.user_id);
+            setUser(latestUser);
+            localStorage.setItem("user", JSON.stringify(latestUser));
+        } catch (err) {
+            console.error(err);
+        }
+    };
 
     useEffect(() => {
-        const storedUser = localStorage.getItem("user");
-
-        if (storedUser) {
-            setUser(JSON.parse(storedUser));
-        }
-
-        setLoading(false);
+        fetchLatestUser();
+        const handleFocus = () => fetchLatestUser();
+        window.addEventListener("focus", handleFocus);
+        return () => window.removeEventListener("focus", handleFocus);
     }, []);
-
-    if (loading) {
-        return <div><NavBar /><p>Loading...</p></div>;
-    }
 
     return (
         <div className="app-container">
             <NavBar />
-
             {user ? (
                 <div className="account-container">
                     <h2>Account</h2>
@@ -32,8 +40,6 @@ function AccountPage() {
                     <p><strong>ID:</strong> {user.user_id}</p>
                     <p><strong>Wins:</strong> {user.total_wins}</p>
                     <p><strong>Losses:</strong> {user.total_losses}</p>
-
-
                     <button
                         className="login-button"
                         onClick={() => {

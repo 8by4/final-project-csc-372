@@ -1,30 +1,31 @@
-//LoginPage.js
+// SignupPage.js
 
 import React, { useState } from 'react';
 import '../App.css';
 import '../css/Login.css';
 import NavBar from '../components/navbarComponent';
-import { loginUser } from '../services/accountService';
-import { useNavigate, Link } from 'react-router-dom';
+import { createUser } from '../services/accountService';
+import { useNavigate} from 'react-router-dom';
 
-function LogInPage() {
+function SignupPage() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [email, setEmail] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate();
 
-  const handleLogin = async (e) => {
+  const handleSignup = async (e) => {
     e.preventDefault();
 
     try {
-      const data = await loginUser(username, password);
+      const data = await createUser(username, password, email);
 
-      if (data.user) {
-        console.log("Logged in user:", data.user);
-        localStorage.setItem("user", JSON.stringify(data.user));
+      if (data.user_id) {
+        console.log("Created user:", data);
+        localStorage.setItem("user", JSON.stringify(data));
         navigate("/");
       } else {
-        setError(data.message || "Login failed");
+        setError(data.message || "Signup failed");
       }
     } catch (err) {
       console.error(err);
@@ -36,7 +37,7 @@ function LogInPage() {
     <div className="app-container">
       <NavBar />
       <div className="login-container">
-        <form className="login-form" onSubmit={handleLogin}>
+        <form className="login-form" onSubmit={handleSignup}>
           <input
             type="text"
             placeholder="Username"
@@ -45,21 +46,25 @@ function LogInPage() {
             onChange={(e) => setUsername(e.target.value)}
           />
           <input
+            type="email"
+            placeholder="Email"
+            className="login-input"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          <input
             type="password"
             placeholder="Password"
             className="login-input"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
-          <button type="submit" className="login-button">Log In</button>
+          <button type="submit" className="login-button">Sign Up</button>
         </form>
         {error && <p className="signup-text">{error}</p>}
-        <p className="signup-text">
-          Don't have an account? <Link to="/signup">Sign Up</Link>
-        </p>
       </div>
     </div>
   );
 }
 
-export default LogInPage;
+export default SignupPage;

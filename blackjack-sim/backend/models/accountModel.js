@@ -2,6 +2,12 @@
 "use strict";
 const pool = require('../models/db');
 
+async function getUserById(user_id) {
+  const queryText = "SELECT * FROM blackjack_users WHERE user_id = $1";
+  const result = await pool.query(queryText, [user_id]);
+  return result.rows[0];
+}
+
 async function getAllWins(user_id) {
     const queryText = "SELECT total_wins FROM blackjack_users WHERE user_id = $1";
     const values = [user_id];
@@ -36,10 +42,29 @@ async function loginUser(username, password) {
     return result.rows[0];
 }
 
+async function addWin(user_id){
+    const queryText = "UPDATE blackjack_users SET total_wins = total_wins + 1 WHERE user_id = $1 RETURNING *;";
+    const values = [user_id];
+    
+    const result = await pool.query(queryText, values);
+    return result.rows[0];
+}
+
+
+async function addLoss(user_id){
+    const queryText = "UPDATE blackjack_users SET total_losses = total_losses + 1 WHERE user_id = $1 RETURNING *;";
+    const values = [user_id];
+
+    const result = await pool.query(queryText, values);
+    return result.rows[0];
+}
 
 module.exports = {
+    getUserById,
     getAllWins,
     getAllLosses,
     createAccount,
-    loginUser
+    loginUser,
+    addWin,
+    addLoss
 }

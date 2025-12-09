@@ -8,6 +8,8 @@ import card2 from './assets/8S.png';
 
 import LoginPage from './pages/LoginPage';
 import AccountPage from './pages/AccountPage';
+import GamePage from './pages/GamePage';
+import SignupPage from './pages/SignupPage';
 
 
 function HomePage() {
@@ -35,6 +37,8 @@ function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/account" element={<AccountPage />} />
+        <Route path="/play" element={<GamePage />} />
+        <Route path="/signup" element={<SignupPage />} />
       </Routes>
     </Router>
   );

@@ -3,6 +3,20 @@
 
 const model = require("../models/accountModel");
 
+async function fetchUserById(req, res) {
+  try {
+    console.log("Received userId:", req.params.id);
+
+    const userId = req.params.id;
+    const user = await model.getUserById(userId);
+    if (!user) return res.status(404).send("User not found");
+    res.json(user);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Server error");
+  }
+}
+
 async function fetchWins(req, res) {
     try {
         const userId = req.params.id;
@@ -69,11 +83,44 @@ async function loginUser(req, res) {
 }
 
 
+async function addWin(req, res) {
+    try {
+        const userId = req.params.id;
+        const updatedUser = await model.addWin(userId);
 
+        if (!updatedUser) {
+            return res.status(404).send("User not found");
+        }
+
+        res.json(updatedUser);
+    } catch (err) {
+        console.error(err);
+        res.status(500).send("Error updating wins");
+    }
+}
+
+async function addLoss(req, res) {
+    try {
+        const userId = req.params.id;
+        const updatedUser = await model.addLoss(userId);
+
+        if (!updatedUser) {
+            return res.status(404).send("User not found");
+        }
+
+        res.json(updatedUser);
+    } catch (err) {
+        console.error(err);
+        res.status(500).send("Error updating losses");
+    }
+}
 
 module.exports = {
+    fetchUserById,
     fetchWins,
     fetchLosses,
     createUser,
-    loginUser
+    loginUser,
+    addWin,
+    addLoss
 };
