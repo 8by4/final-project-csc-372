@@ -13,12 +13,11 @@ async function createNewDeck() {
     }
 }
 
-async function drawCard(deckId, count){
-    try{
-        const res = await fetch(`${BASE_URL}/${deckId}/draw?count=${count}`);
+async function drawCard(deckId, count = 1) {
+    try {
+        const res = await fetch(`${BASE_URL}/${deckId}/draw/?count=${count}`);
         return res.json();
-    }
-    catch(err){
+    } catch (err) {
         console.error("Failed to draw card!", err);
     }
 }
