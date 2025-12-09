@@ -24,7 +24,7 @@ function HomePage() {
 
       <div className="title-buttons">
         <Link to="/login"><button>Log In</button></Link>
-        <button>Sign Up</button>
+        <Link to="/signup"><button>Sign Up</button></Link>
       </div>
     </div>
   );
