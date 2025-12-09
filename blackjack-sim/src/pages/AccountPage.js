@@ -5,6 +5,7 @@ import '../App.css';
 import '../css/Login.css';
 import NavBar from '../components/navbarComponent';
 import { getUserById } from '../services/accountService';
+import { Link } from "react-router-dom";
 
 function AccountPage() {
     const [user, setUser] = useState(null);
@@ -53,7 +54,7 @@ function AccountPage() {
             ) : (
                 <div className="login-container">
                     <h2>You are not logged in</h2>
-                    <a href="/login" className="login-button">Go to Login</a>
+                    <Link to="/login" className="login-button">Go to Login</Link>
                 </div>
             )}
         </div>
