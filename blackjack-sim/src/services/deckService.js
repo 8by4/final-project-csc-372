@@ -1,15 +1,15 @@
 //deckService.js
 export async function newDeck() {
-  const res = await fetch("http://localhost:5000/deck/new");
+  const res = await fetch("https://final-project-csc-372.onrender.com/deck/new");
   return res.json();
 }
 
 export async function drawCards(deckId, count = 1) {
-  const res = await fetch(`http://localhost:5000/deck/${deckId}/draw?count=${count}`);
+  const res = await fetch(`https://final-project-csc-372.onrender.com/deck/${deckId}/draw?count=${count}`);
   return res.json();
 }
 
 export async function shuffleDeck(deckId) {
-  const res = await fetch(`http://localhost:5000/deck/${deckId}/shuffle`);
+  const res = await fetch(`https://final-project-csc-372.onrender.com/deck/${deckId}/shuffle`);
   return res.json();
 }
