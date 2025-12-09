@@ -29,6 +29,9 @@ function GamePage() {
         try {
             const deck = await newDeck();
             setDeckId(deck.deck_id);
+            
+            console.log("Deck ID:", deck.deck_id);
+
 
             const playerResponse = await drawCards(deck.deck_id, 2);
             const dealerResponse = await drawCards(deck.deck_id, 2);
