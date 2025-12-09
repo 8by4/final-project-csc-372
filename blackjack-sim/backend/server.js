@@ -8,7 +8,9 @@ const path = require("path");
 
 const app = express();
 app.use(express.json());
-app.use(cors());
+app.use(cors({
+    origin: "https://final-project-csc-372-1.onrender.com"
+}));
 
 const deckRoutes = require("./routes/deckRoutes");
 const accountRoutes = require("./routes/accountRoutes");
