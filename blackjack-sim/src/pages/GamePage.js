@@ -26,17 +26,30 @@ function GamePage() {
         setPlayerCards([]);
         setDealerCards([]);
 
-        const deck = await newDeck();
-        setDeckId(deck.deck_id);
+        try {
+            const deck = await newDeck();
+            setDeckId(deck.deck_id);
 
-        const [player, dealer] = await Promise.all([
-            drawCards(deck.deck_id, 2),
-            drawCards(deck.deck_id, 2)
-        ]);
-        console.log(player);
+            const playerResponse = await drawCards(deck.deck_id, 2);
+            const dealerResponse = await drawCards(deck.deck_id, 2);
 
-        setPlayerCards(player.cards);
-        setDealerCards(dealer.cards);
+            console.log("Player draw response:", playerResponse);
+            console.log("Dealer draw response:", dealerResponse);
+
+            if (playerResponse.cards && playerResponse.cards.length === 2) {
+                setPlayerCards(playerResponse.cards);
+            } else {
+                console.error("Player did not get 2 cards:", playerResponse);
+            }
+
+            if (dealerResponse.cards && dealerResponse.cards.length === 2) {
+                setDealerCards(dealerResponse.cards);
+            } else {
+                console.error("Dealer did not get 2 cards:", dealerResponse);
+            }
+        } catch (err) {
+            console.error("Error initializing game:", err);
+        }
     }
 
     useEffect(() => {
@@ -68,14 +81,18 @@ function GamePage() {
 
     async function hit() {
         if (gameOver) return;
-        const draw = await drawCards(deckId, 1);
-        const newHand = [...playerCards, draw.cards[0]];
-        setPlayerCards(newHand);
+        try {
+            const draw = await drawCards(deckId, 1);
+            const newHand = [...playerCards, draw.cards[0]];
+            setPlayerCards(newHand);
 
-        if (calculateHand(newHand) > 21) {
-            setMessage("Bust! You lose.");
-            setGameOver(true);
-            await addLoss(user.user_id);
+            if (calculateHand(newHand) > 21) {
+                setMessage("Bust! You lose.");
+                setGameOver(true);
+                await addLoss(user.user_id);
+            }
+        } catch (err) {
+            console.error("Error drawing card:", err);
         }
     }
 
@@ -86,22 +103,26 @@ function GamePage() {
         let dealerHand = [...dealerCards];
         const playerTotal = calculateHand(playerCards);
 
-        while (calculateHand(dealerHand) < 17) {
-            const draw = await drawCards(deckId, 1);
-            dealerHand.push(draw.cards[0]);
-        }
+        try {
+            while (calculateHand(dealerHand) < 17) {
+                const draw = await drawCards(deckId, 1);
+                dealerHand.push(draw.cards[0]);
+            }
 
-        setDealerCards(dealerHand);
-        const dealerTotal = calculateHand(dealerHand);
+            setDealerCards(dealerHand);
+            const dealerTotal = calculateHand(dealerHand);
 
-        if (dealerTotal > 21 || playerTotal > dealerTotal) {
-            setMessage("You win!");
-            await addWin(user.user_id);
-        } else if (dealerTotal === playerTotal) {
-            setMessage("It's a tie.");
-        } else {
-            setMessage("Dealer wins.");
-            await addLoss(user.user_id);
+            if (dealerTotal > 21 || playerTotal > dealerTotal) {
+                setMessage("You win!");
+                await addWin(user.user_id);
+            } else if (dealerTotal === playerTotal) {
+                setMessage("It's a tie.");
+            } else {
+                setMessage("Dealer wins.");
+                await addLoss(user.user_id);
+            }
+        } catch (err) {
+            console.error("Error during dealer turn:", err);
         }
     }
 
@@ -115,27 +136,19 @@ function GamePage() {
                     <h2>Blackjack</h2>
 
                     <h3>Dealer</h3>
-                    {dealerCards.length === 0 ? (
-                        <p>Loading dealer's hand...</p>
-                    ) : (
-                        dealerCards.map((c, i) => (
-                            <img
-                                key={i}
-                                src={gameOver || i === 0 ? c.image : "https://deckofcardsapi.com/static/img/back.png"}
-                                alt="card"
-                                width={90}
-                            />
-                        ))
-                    )}
+                    {dealerCards.map((c, i) => (
+                        <img
+                            key={i}
+                            src={gameOver || i === 0 ? c.image : "https://deckofcardsapi.com/static/img/back.png"}
+                            alt="card"
+                            width={90}
+                        />
+                    ))}
 
                     <h3>Your Hand ({calculateHand(playerCards)})</h3>
-                    {playerCards.length === 0 ? (
-                        <p>Loading your hand...</p>
-                    ) : (
-                        playerCards.map((c) => (
-                            <img key={c.code} src={c.image} alt={c.code} width={90} />
-                        ))
-                    )}
+                    {playerCards.map((c) => (
+                        <img key={c.code} src={c.image} alt={c.code} width={90} />
+                    ))}
 
                     <div style={{ marginTop: "20px" }}>
                         {!gameOver ? (
